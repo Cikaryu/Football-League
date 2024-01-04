@@ -1,6 +1,7 @@
 package com.uts.uasmobprogug214;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,18 +22,13 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
-            switch  (item.getItemId()){
-                case R.id.result:
-                    replaceFragment(new ResultFragment());
-                    break;
-                case R.id.league:
-                    replaceFragment(new LeagueFragment());
-                    break;
-                case R.id.goalsking:
-                    replaceFragment(new GoalsKingFragment());
-                    break;
+            if (item.getItemId() == R.id.result) {
+                replaceFragment(new ResultFragment());
+            } else if (item.getItemId() == R.id.league) {
+                replaceFragment(new LeagueFragment());
+            } else if (item.getItemId() == R.id.goalsking) {
+                replaceFragment(new GoalsKingFragment());
             }
-
             return true;
         });
     }
@@ -40,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout.fragment);
+        fragmentTransaction.replace(R.id.frameLayout,fragment);
         fragmentTransaction.commit();
     }
 }
