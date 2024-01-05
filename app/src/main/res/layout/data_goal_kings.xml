@@ -1,0 +1,36 @@
+<!-- res/layout/item_table_row.xml -->
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/textViewColumnName"
+        android:layout_width="177dp"
+        android:layout_weight="1"
+        android:background="#DDEFEF"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Column 1"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/textViewColumnPlay"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="#DDEFEF"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Column 2"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/textViewColumnGoals"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:background="#DDEFEF"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Column 3"
+        android:textColor="#000000" />
+</TableRow>
