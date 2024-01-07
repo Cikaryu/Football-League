@@ -8,15 +8,110 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GoalsKingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.uts.uasmobprogug214.models.GoalKings;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public class GoalsKingFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    Context ctx;
+    Button btn1;
+    RecyclerView recyclerView1;
+    ApiInterface apiService;
+    List<GoalKings> data1;
+    RecyclerViewGoalKings adapter;
+    Spinner spinnertipe;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_goals_king, container, false);
+        ctx = rootView.getContext();
+
+        recyclerView1 = rootView.findViewById(R.id.recyclerViewGoalKings);
+        btn1 = rootView.findViewById(R.id.buttongoals);
+        spinnertipe = rootView.findViewById(R.id.spinnerSearchBy);
+
+        ArrayAdapter<CharSequence> TipeAdapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.Tipe,
+                android.R.layout.simple_spinner_item
+        );
+        TipeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnertipe.setAdapter(TipeAdapter);
+
+
+        LinearLayoutManager manager = new LinearLayoutManager(ctx);
+        recyclerView1.setLayoutManager(manager);
+        recyclerView1.setHasFixedSize(true);
+
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchGoals();
+            }
+        });
+
+        return rootView;
+    }
+
+
+
+
+    private void searchGoals() {
+        String selectedType = spinnertipe.getSelectedItem().toString();
+        Call<List<GoalKings>> call = apiService.getGoalKings(selectedType);
+
+         call.enqueue(new Callback<List<GoalKings>>() {
+            @Override
+            public void onResponse(Call<List<GoalKings>> call, Response<List<GoalKings>> response) {
+                if (response.isSuccessful()) {
+                    data1 = response.body();
+                    updateRecyclerView();
+                } else {
+                    // Handle error
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<GoalKings>> call, Throwable t) {
+                // Handle failure
+            }
+         });
+
+
+    }
+
+    private void updateRecyclerView() {
+        adapter = new RecyclerViewGoalKings(ctx, data1);
+        recyclerView1.setAdapter(adapter);
+    }
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -28,15 +123,8 @@ public class GoalsKingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GoalsKingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
+
     public static GoalsKingFragment newInstance(String param1, String param2) {
         GoalsKingFragment fragment = new GoalsKingFragment();
         Bundle args = new Bundle();
@@ -55,10 +143,5 @@ public class GoalsKingFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goals_king, container, false);
-    }
+
 }

@@ -5,6 +5,8 @@ import com.uts.uasmobprogug214.models.Results;
 import com.uts.uasmobprogug214.models.League;
 import com.uts.uasmobprogug214.models.GoalKings;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -35,6 +37,6 @@ public interface ApiInterface {
     @Headers({"Content-Type: application/json",
             "Authorization: " + API_KEY
     })
-    @GET("sport/league")
-    Call<GoalKings> getGoalKings(@Query("data.league") String dataGoalKings);
+    @GET("sport/goalKings")
+    Call<List<GoalKings>> getGoalKings(@Query("data.league") String dataGoalKings) ;
 }
