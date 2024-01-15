@@ -85,7 +85,7 @@ public class GoalsKingFragment extends Fragment {
                     Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                 } else {
                     if (response.body() == null){
-                        
+
                     }else{
                         result = response.body();
                         data1 = result.getResult();
