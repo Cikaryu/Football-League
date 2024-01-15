@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 @Generated("jsonschema2pojo")
 public class ResultGoalKings {
 
@@ -14,7 +16,7 @@ public class ResultGoalKings {
     @SerializedName("result")
     @Expose
     @Valid
-    private GoalKings result;
+    private List<GoalKings> result;
 
     public Boolean getSuccess() {
         return success;
@@ -24,11 +26,11 @@ public class ResultGoalKings {
         this.success = success;
     }
 
-    public GoalKings getResult() {
+    public List<GoalKings> getResult() {
         return result;
     }
 
-    public void setResult(GoalKings result) {
+    public void setResult(List<GoalKings> result) {
         this.result = result;
     }
 
