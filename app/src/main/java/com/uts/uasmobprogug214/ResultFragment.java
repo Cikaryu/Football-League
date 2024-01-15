@@ -2,6 +2,7 @@ package com.uts.uasmobprogug214;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class ResultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
         // Inisialisasi elemen UI
-        btn1 = view.findViewById(R.id.btn1);
+        btn1 = view.findViewById(R.id.btnSubmit);
         recyclerView1 = view.findViewById(R.id.recyclerView1);
         spinTeam = view.findViewById(R.id.spinTeam);
 
@@ -97,6 +98,20 @@ public class ResultFragment extends Fragment {
                 android.R.layout.simple_spinner_item);
         teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinTeam.setAdapter(teamsAdapter);
+
+        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinTeam.setAdapter(teamsAdapter);
+
+        LinearLayoutManager manager = new LinearLayoutManager(ctx);
+        recyclerView1.setLayoutManager(manager);
+        recyclerView1.setHasFixedSize(true);
+
+        if (adapter != null) {
+            adapter = null;
+            data1.clear();
+        }
+
+        apiService = ApiClient.getClient().create(ApiInterface.class);
 
         // panggil function load data
         loadData();
@@ -120,6 +135,7 @@ public class ResultFragment extends Fragment {
                     } else {
                         result = response.body();
                         data1 = result.getResult();
+                        Log.d("data Results", data1.toString());
                         adapter = new RecyclerViewResult(ctx, data1);
                         recyclerView1.setAdapter(adapter);
                     }
@@ -128,7 +144,7 @@ public class ResultFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResultResults> call, Throwable t) {
-
+                Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
