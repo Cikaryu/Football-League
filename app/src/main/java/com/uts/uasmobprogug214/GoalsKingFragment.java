@@ -1,32 +1,22 @@
 package com.uts.uasmobprogug214;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.uts.uasmobprogug214.models.GoalKings;
+import com.uts.uasmobprogug214.models.ResultGoalKings;
+import com.uts.uasmobprogug214.models.Results;
 
 import java.util.List;
 
@@ -34,16 +24,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class GoalsKingFragment extends Fragment {
 
-    Context ctx;
-    Button btn1;
-    RecyclerView recyclerView1;
-    ApiInterface apiService;
-    List<GoalKings> data1;
-    RecyclerViewGoalKings adapter;
-    Spinner spinnertipe;
+    private Context ctx;
+    private Button btn1;
+    private RecyclerView recyclerView1;
+    private ApiInterface apiService;
+    private List<GoalKings> data1;
+    private ResultGoalKings result;
+    private RecyclerViewGoalKings adapter;
+    private Spinner spinnertipe;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,68 +52,79 @@ public class GoalsKingFragment extends Fragment {
         TipeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnertipe.setAdapter(TipeAdapter);
 
-
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView1.setLayoutManager(manager);
         recyclerView1.setHasFixedSize(true);
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
 
+        if (adapter != null) {
+            adapter = null;
+            data1.clear();
+        }
+
+        LoadData();
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                searchGoals();
+            public void onClick(View v) {
+                LoadData();
             }
         });
 
         return rootView;
     }
 
-
-
-
-    private void searchGoals() {
+    public void LoadData() {
         String selectedType = spinnertipe.getSelectedItem().toString();
-        Call<List<GoalKings>> call = apiService.getGoalKings(selectedType);
-
-         call.enqueue(new Callback<List<GoalKings>>() {
+        Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedType);
+        getGoalKings.enqueue(new Callback<ResultGoalKings>() {
             @Override
-            public void onResponse(Call<List<GoalKings>> call, Response<List<GoalKings>> response) {
-                if (response.isSuccessful()) {
-                    data1 = response.body();
-                    updateRecyclerView();
+            public void onResponse(Call<ResultGoalKings> call, Response<ResultGoalKings> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                 } else {
-                    // Handle error
+                    if (response.body() == null){
+                        
+                    }else{
+                        result = response.body();
+                        data1 = result.getResult();
+                        adapter = new RecyclerViewGoalKings(ctx, data1);
+                        recyclerView1.setAdapter(adapter);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<GoalKings>> call, Throwable t) {
-                // Handle failure
+            public void onFailure(Call<ResultGoalKings> call, Throwable t) {
+                Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-         });
-
-
+        });
     }
 
-    private void updateRecyclerView() {
-        adapter = new RecyclerViewGoalKings(ctx, data1);
-        recyclerView1.setAdapter(adapter);
-    }
+
+
+
+
+//    private void updateRecyclerView(List<GoalKings> goalKingsList) {
+//        if (adapter == null) {
+//            adapter = new RecyclerViewGoalKings(ctx, goalKingsList);
+//            recyclerView1.setAdapter(adapter);
+//        } else {
+//            adapter.setGoalKingsList(goalKingsList);
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public GoalsKingFragment() {
         // Required empty public constructor
     }
-
-
 
     public static GoalsKingFragment newInstance(String param1, String param2) {
         GoalsKingFragment fragment = new GoalsKingFragment();
@@ -141,7 +142,6 @@ public class GoalsKingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        ctx = getActivity();
     }
-
-
 }
