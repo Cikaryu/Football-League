@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +118,7 @@ public class LeagueFragment extends Fragment {
     public void loadData() {
         //String selectedLeagues = spinleague.getSelectedItem().toString();
         String selectedTeam = spinteam.getSelectedItem().toString();
-        Call<ResultLeague> getLeague = apiService.getLeague(selectedTeam);
+        Call <ResultLeague> getLeague = apiService.getLeague(selectedTeam);
         getLeague.enqueue(new Callback<ResultLeague>() {
             @Override
             public void onResponse(Call<ResultLeague> call, Response<ResultLeague> response) {
@@ -136,6 +137,7 @@ public class LeagueFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResultLeague> call, Throwable t) {
+                Log.e("API_CALL", "Error: " + t.getMessage());
                 Toast.makeText(ctx, "Error: " + t.getMessage(), LENGTH_LONG).show();
             }
         });
