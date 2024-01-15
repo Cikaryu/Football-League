@@ -84,11 +84,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
         android:text="Search By"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintBottom_toTopOf="@+id/spinLeague"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinLeague"
         android:layout_width="190dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -101,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Goal Kings of Europe football leagues"
+        android:text="Goal Kings of Europe football modelLeagues"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"

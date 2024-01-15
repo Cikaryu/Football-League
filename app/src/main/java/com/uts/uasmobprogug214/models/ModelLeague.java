@@ -1,16 +1,11 @@
 package com.uts.uasmobprogug214.models;
 
-import androidx.annotation.Nullable;
-
+import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.annotations.SerializedName;
 
-
-import java.util.List;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class League {
+@Generated("jsonschema2pojo")
+public class ModelLeague {
     @SerializedName("rank")
     @Expose
     private String rank;
@@ -31,11 +26,11 @@ public class League {
     private String team;
 
     // Tambahan: Constructor kosong untuk GSON
-    public League() {
+    public ModelLeague() {
     }
 
     // Tambahan: Constructor dengan parameter untuk inisialisasi
-    public League(String rank, String lose, String win, String play, String point, String team) {
+    public ModelLeague(String rank, String lose, String win, String play, String point, String team) {
         this.rank = rank;
         this.lose = lose;
         this.win = win;

@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinLeague"
         android:layout_width="366dp"
         android:layout_height="48dp"
         android:layout_marginTop="25dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtLose" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/spinTeam"
         android:layout_width="366dp"
         android:layout_height="48dp"
         android:layout_marginTop="80dp"
@@ -46,6 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/spinTeam"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
