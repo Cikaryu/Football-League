@@ -1,12 +1,28 @@
 package com.uts.uasmobprogug214;
 
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.uts.uasmobprogug214.models.ResultResults;
+import com.uts.uasmobprogug214.models.Results;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +30,14 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ResultFragment extends Fragment {
+    Context ctx;
+    Button btn1;
+    RecyclerView recyclerView1;
+    ApiInterface apiService;
+    ResultResults result;
+    List<Results> data1;
+    RecyclerViewResult adapter;
+    Spinner spinTeam;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,12 +77,60 @@ public class ResultFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        ctx = getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false);
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+
+        // Inisialisasi elemen UI
+        btn1 = view.findViewById(R.id.btn1);
+        recyclerView1 = view.findViewById(R.id.recyclerView1);
+        spinTeam = view.findViewById(R.id.spinTeam);
+
+        // Isi Spinner Teams
+        ArrayAdapter<CharSequence> teamsAdapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.teams,
+                android.R.layout.simple_spinner_item);
+        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinTeam.setAdapter(teamsAdapter);
+
+        // panggil function load data
+        loadData();
+        return view;
     }
+
+
+    public void loadData(){
+        String selectedTeam = spinTeam.getSelectedItem().toString();
+
+        Call<ResultResults> getResultByTeam = apiService.getResults(selectedTeam);
+
+        getResultByTeam.enqueue(new Callback<ResultResults>() {
+            @Override
+            public void onResponse(Call<ResultResults> call, Response<ResultResults> response) {
+                if (response.code() != 200){
+                    Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (response.body() == null){
+
+                    } else {
+                        result = response.body();
+                        data1 = result.getResult();
+                        adapter = new RecyclerViewResult(ctx, data1);
+                        recyclerView1.setAdapter(adapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultResults> call, Throwable t) {
+
+            }
+        });
+    }
+
 }
