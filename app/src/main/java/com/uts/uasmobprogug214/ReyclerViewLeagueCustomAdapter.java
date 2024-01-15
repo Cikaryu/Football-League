@@ -7,20 +7,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.uts.uasmobprogug214.models.League;
+import com.uts.uasmobprogug214.models.ModelLeague;
 
 import java.util.List;
 
 public class ReyclerViewLeagueCustomAdapter extends RecyclerView.Adapter<ReyclerViewLeagueCustomAdapter.ViewHolder> {
-    private List<League> leagueList;
+    private List<ModelLeague> modelLeagueList;
 
-    public ReyclerViewLeagueCustomAdapter(List<League> leagueList) {
-        this.leagueList = leagueList;
+    public ReyclerViewLeagueCustomAdapter(List<ModelLeague> modelLeagueList) {
+        this.modelLeagueList = modelLeagueList;
     }
 
-    public void setLeagueList(List<League> newLeagueList) {
-        this.leagueList = newLeagueList;
-        notifyDataSetChanged(); // Notify the adapter that the data has changed
+    public void setLeagueList(List<ModelLeague> newModelLeagueList) {
+        if (newModelLeagueList != null) {
+            this.modelLeagueList = newModelLeagueList;
+            notifyDataSetChanged(); // Notify the adapter that the data has changed
+        }
     }
 
     @NonNull
@@ -32,20 +34,20 @@ public class ReyclerViewLeagueCustomAdapter extends RecyclerView.Adapter<Reycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        League league = leagueList.get(position);
+        ModelLeague modelLeague = modelLeagueList.get(position);
 
         // Set data to views
-        holder.txtRank.setText(league.getRank());
-        holder.txtTeam.setText(league.getTeam());
-        holder.txtWin.setText(league.getWin());
-        holder.txtLose.setText(league.getLose());
-        holder.txtPoints.setText(league.getPoint());
-        holder.txtPlay.setText(league.getPlay());
+        holder.txtRank.setText(modelLeague.getRank());
+        holder.txtTeam.setText(modelLeague.getTeam());
+        holder.txtWin.setText(modelLeague.getWin());
+        holder.txtLose.setText(modelLeague.getLose());
+        holder.txtPoints.setText(modelLeague.getPoint());
+        holder.txtPlay.setText(modelLeague.getPlay());
     }
 
     @Override
     public int getItemCount() {
-        return leagueList.size();
+        return modelLeagueList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -8,13 +8,13 @@ import java.util.List;
 public class LeaguesList {
     @SerializedName("league")
     @Expose
-    private List<League> leagues;
+    private List<ModelLeague> modelLeagues;
 
-    public List<League> getLeagues() {
-        return leagues;
+    public List<ModelLeague> getLeagues() {
+        return modelLeagues;
     }
 
-    public void setLeagues(List<League> leagues) {
-        this.leagues = leagues;
+    public void setLeagues(List<ModelLeague> modelLeagues) {
+        this.modelLeagues = modelLeagues;
     }
 }
