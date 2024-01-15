@@ -1,7 +1,9 @@
 package com.uts.uasmobprogug214;
 
 import com.uts.uasmobprogug214.models.LeaguesList;
+import com.uts.uasmobprogug214.models.ResultGoalKings;
 import com.uts.uasmobprogug214.models.ResultLeague;
+import com.uts.uasmobprogug214.models.ResultResults;
 import com.uts.uasmobprogug214.models.Results;
 import com.uts.uasmobprogug214.models.GoalKings;
 
@@ -24,7 +26,7 @@ public interface    ApiInterface {
             "Authorization: " + API_KEY
     })
     @GET("sport/results")
-    Call<Results> getResults(@Query("data.league") String dataResult);
+    Call<ResultResults> getResults(@Query("data.league") String dataResult);
 
     @Headers({"Content-Type: application/json",
             "Authorization: " + API_KEY
@@ -35,6 +37,6 @@ public interface    ApiInterface {
     @Headers({"Content-Type: application/json",
             "Authorization: " + API_KEY
     })
-    @GET("sport/league")
-    Call<GoalKings> getGoalKings(@Query("data.league") String dataGoalKings);
+    @GET("sport/goalkings")
+    Call<ResultGoalKings> getGoalKings(@Query("data.league") String dataGoalKings);
 }
