@@ -87,7 +87,7 @@ public class LeagueFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_league, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         spinteam = view.findViewById(R.id.spinTeam);
-        spinleague = view.findViewById(R.id.spinLeague);
+        //spinleague = view.findViewById(R.id.spinLeague);
 
         ctx = getActivity();
         /*ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
