@@ -49,6 +49,10 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
         return data.size();
     }
 
+    public void setGoalKingsList(List<GoalKings> goalKingsList) {
+        this.data = goalKingsList;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textViewColumn1, textViewColumn2, textViewColumn3;
 
@@ -57,7 +61,6 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
             textViewColumn1 = itemView.findViewById(R.id.textViewColumnName);
             textViewColumn2 = itemView.findViewById(R.id.textViewColumnPlay);
             textViewColumn3 = itemView.findViewById(R.id.textViewColumnGoals);
-
 
             itemView.setOnClickListener(this);
         }
@@ -69,6 +72,7 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
             }
         }
     }
+
     public interface Clicklistener {
         void onItemClick(int position, View v);
     }
