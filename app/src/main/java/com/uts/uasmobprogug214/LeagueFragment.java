@@ -1,64 +1,89 @@
 package com.uts.uasmobprogug214;
-
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LeagueFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.uts.uasmobprogug214.models.League;
+import com.uts.uasmobprogug214.models.LeaguesList;
+
+import com.uts.uasmobprogug214.ReyclerViewLeagueCustomAdapter;
+import com.uts.uasmobprogug214.ApiClient;
+import com.uts.uasmobprogug214.ApiInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class LeagueFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView recyclerView;
+    private ReyclerViewLeagueCustomAdapter leagueAdapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public LeagueFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LeagueFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LeagueFragment newInstance(String param1, String param2) {
-        LeagueFragment fragment = new LeagueFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    // ...
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_league, container, false);
+        View view = inflater.inflate(R.layout.fragment_league, container, false);
+
+        // Find the RecyclerView in the layout
+        recyclerView = view.findViewById(R.id.recyclerView);
+
+        // Set the layout manager for the RecyclerView (in this case, LinearLayoutManager)
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Create a new instance of LeagueAdapter and set it to the RecyclerView
+        leagueAdapter = new ReyclerViewLeagueCustomAdapter(new ArrayList<>());
+        recyclerView.setAdapter(leagueAdapter);
+
+        // Call the method to fetch data from the API and update the RecyclerView
+        fetchDataFromApi();
+
+        // Return the inflated view for the fragment
+        return view;
+    }
+
+    // Method to fetch data from the API using Retrofit
+    private void fetchDataFromApi() {
+        // Create an instance of ApiInterface using ApiClient
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+        // Create a Retrofit call to get data from the API
+        Call<LeaguesList> call = apiInterface.getLeaguesList("sport/leaguesList");
+
+        // Enqueue the call to execute asynchronously
+        call.enqueue(new Callback<LeaguesList>() {
+            @Override
+            public void onResponse(Call<LeaguesList> call, Response<LeaguesList> response) {
+                if (response.isSuccessful()) {
+                    // Log or print the data received
+                    Log.d("API Response", "Data: " + response.body());
+
+                    // Update the adapter with the received data
+                    List<League> leagues = response.body().getLeagues();
+                    Log.d("API Response", "Number of leagues: " + leagues.size());
+
+                    leagueAdapter.setLeagueList(leagues);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LeaguesList> call, Throwable t) {
+                // Handle failure (e.g., network issues, server errors)
+                // You might want to implement appropriate error handling here
+                Log.e("API Request", "Failed: " + t.getMessage());
+            }
+        });
     }
 }
+
