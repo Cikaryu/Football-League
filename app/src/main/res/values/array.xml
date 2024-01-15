@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="teams">
+        <item>Adana Demirspor</item>
+        <item>Akhisarspor</item>
+        <item>Alanyaspor</item>
+        <item>Ankaragücü</item>
+        <item>Antalyaspor</item>
+        <item>Atiker Konyaspor</item>
+        <item>Beşiktaş</item>
+        <item>Çaykur Rizespor</item>
+        <item>DG Sivasspor</item>
+        <item>EY Malatyaspor</item>
+        <item>Fatih Karagümrük</item>
+        <item>Fenerbahçe</item>
+        <item>Galatasaray</item>
+        <item>Gaziantep</item>
+        <item>Hatayspor</item>
+        <item>İstanbul Başakşehir</item>
+        <item>İstanbulspor</item>
+        <item>Kasımpaşa</item>
+        <item>Kayserispor</item>
+        <item>M.Başakşehir</item>
+        <item>Pendikspor</item>
+        <item>Samsunspor</item>
+        <item>Trabzonspor</item>
+    </string-array>
+</resources>
