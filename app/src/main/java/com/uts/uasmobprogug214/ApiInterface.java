@@ -1,6 +1,7 @@
 package com.uts.uasmobprogug214;
 
 import com.uts.uasmobprogug214.models.LeaguesList;
+import com.uts.uasmobprogug214.models.ResultGoalKings;
 import com.uts.uasmobprogug214.models.Results;
 import com.uts.uasmobprogug214.models.League;
 import com.uts.uasmobprogug214.models.GoalKings;
@@ -14,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    String API_KEY = "apikey 5o7fnd3jCelT09m1cUxdbG:7CffHc97mdnTMfbEmNhLo0";
+    String API_KEY = "apikey 2JejIXfRlSfpEmuH3WAk8t:3o0BdH9jpX5M766J3NikCe";
 
     @Headers({"Content-Type: application/json",
             "Authorization: " + API_KEY
@@ -38,5 +39,5 @@ public interface ApiInterface {
             "Authorization: " + API_KEY
     })
     @GET("sport/goalKings")
-    Call<List<GoalKings>> getGoalKings(@Query("data.league") String dataGoalKings) ;
+    Call <ResultGoalKings> getGoalKings(@Query("data.league") String dataGoalKings) ;
 }
