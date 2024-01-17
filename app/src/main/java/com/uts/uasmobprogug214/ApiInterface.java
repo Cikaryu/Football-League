@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface    ApiInterface {
 
-    String API_KEY = "apikey 5o7fnd3jCelT09m1cUxdbG:7CffHc97mdnTMfbEmNhLo0";
+    String API_KEY = "apikey 2JejIXfRlSfpEmuH3WAk8t:3o0BdH9jpX5M766J3NikCe";
 
     @Headers({"Content-Type: application/json",
             "Authorization: " + API_KEY
