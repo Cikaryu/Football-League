@@ -2,6 +2,7 @@ package com.uts.uasmobprogug214;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.uts.uasmobprogug214.models.GoalKings;
+import com.uts.uasmobprogug214.models.ModelGoalKings;
 import com.uts.uasmobprogug214.models.ResultGoalKings;
 
 
@@ -30,90 +31,10 @@ public class GoalsKingFragment extends Fragment {
     private Button btn1;
     private RecyclerView recyclerView1;
     private ApiInterface apiService;
-    private List<GoalKings> data1;
+    private List<ModelGoalKings> data1;
     private ResultGoalKings result;
     private RecyclerViewGoalKings adapter;
     private Spinner spinnerLeague;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_goals_king, container, false);
-        ctx = rootView.getContext();
-
-        recyclerView1 = rootView.findViewById(R.id.recyclerViewGoalKings);
-        btn1 = rootView.findViewById(R.id.buttongoals);
-        spinnerLeague = rootView.findViewById(R.id.spinnerSearchBy);
-
-        ArrayAdapter<CharSequence> league = ArrayAdapter.createFromResource(
-                ctx,
-                R.array.leaguesList,
-                android.R.layout.simple_spinner_item
-        );
-        league.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerLeague.setAdapter(league);
-
-        LinearLayoutManager manager = new LinearLayoutManager(ctx);
-        recyclerView1.setLayoutManager(manager);
-        recyclerView1.setHasFixedSize(true);
-
-        apiService = ApiClient.getClient().create(ApiInterface.class);
-
-        if (adapter != null) {
-            adapter = null;
-            data1.clear();
-        }
-
-        LoadData();
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoadData();
-            }
-        });
-
-        return rootView;
-    }
-    public void LoadData() {
-        String selectedType = spinnerLeague.getSelectedItem().toString();
-        Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedType);
-        getGoalKings.enqueue(new Callback<ResultGoalKings>() {
-            @Override
-            public void onResponse(Call<ResultGoalKings> call, Response<ResultGoalKings> response) {
-                if (response.code() != 200) {
-                    Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
-                } else {
-                    if (response.body() == null){
-
-                    }else{
-                        result = response.body();
-                        data1 = result.getResult();
-                        adapter = new RecyclerViewGoalKings(ctx, data1);
-                        recyclerView1.setAdapter(adapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultGoalKings> call, Throwable t) {
-                Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-
-
-
-//    private void updateRecyclerView(List<GoalKings> goalKingsList) {
-//        if (adapter == null) {
-//            adapter = new RecyclerViewGoalKings(ctx, goalKingsList);
-//            recyclerView1.setAdapter(adapter);
-//        } else {
-//            adapter.setGoalKingsList(goalKingsList);
-//            adapter.notifyDataSetChanged();
-//        }
-//    }
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -143,4 +64,79 @@ public class GoalsKingFragment extends Fragment {
         }
         ctx = getActivity();
     }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_goals_king, container, false);
+
+
+        recyclerView1 = view.findViewById(R.id.recyclerViewGoalKings);
+        btn1 = view.findViewById(R.id.buttongoals);
+        spinnerLeague = view.findViewById(R.id.spinnerSearchBy);
+
+
+        ArrayAdapter<CharSequence> league = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.leaguesList,
+                android.R.layout.simple_spinner_item
+        );
+        league.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLeague.setAdapter(league);
+
+
+
+        LinearLayoutManager manager = new LinearLayoutManager(ctx);
+        recyclerView1.setLayoutManager(manager);
+        recyclerView1.setHasFixedSize(true);
+
+
+        if (adapter != null) {
+            adapter = null;
+            data1.clear();
+        }
+
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadData();
+            }
+        });
+        LoadData();
+        return view;
+
+    }
+    public void LoadData() {
+        String selectedType = spinnerLeague.getSelectedItem().toString();
+        Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedType);
+        getGoalKings.enqueue(new Callback<ResultGoalKings>() {
+            @Override
+            public void onResponse(Call<ResultGoalKings> call, Response<ResultGoalKings> response) {
+                if (response.code() != 200) {
+                    Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (response.body() == null){
+
+                    } else {
+                        result = response.body();
+                        data1 = result.getResult();
+                        Log.d("data Goal", data1.toString());
+                        adapter = new RecyclerViewGoalKings(ctx, data1);
+                        recyclerView1.setAdapter(adapter);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultGoalKings> call, Throwable t) {
+                Log.e("API Error", "Error: " + t.getMessage(), t);
+                Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

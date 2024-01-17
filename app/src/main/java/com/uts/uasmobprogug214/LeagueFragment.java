@@ -100,7 +100,7 @@ public class LeagueFragment extends Fragment {
         */
         ArrayAdapter<CharSequence> teamsAdapter = ArrayAdapter.createFromResource(
                 ctx,
-                R.array.teams,
+                R.array.leaguesList,
                 android.R.layout.simple_spinner_item);
         teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinteam.setAdapter(teamsAdapter);
