@@ -9,16 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.uts.uasmobprogug214.models.Results;
+import com.uts.uasmobprogug214.models.ModelResults;
 
 import java.util.List;
 
 public class RecyclerViewResult extends RecyclerView.Adapter<RecyclerViewResult.ViewHolder>{
     Context ctx;
     private static ClickListener clickListener;
-    List<Results> data;
+    List<ModelResults> data;
 
-    public RecyclerViewResult (Context context, List<Results> dataResults){
+    public RecyclerViewResult (Context context, List<ModelResults> dataResults){
         ctx = context;
         data = dataResults;
     }
@@ -59,7 +59,7 @@ public class RecyclerViewResult extends RecyclerView.Adapter<RecyclerViewResult.
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewResult.ViewHolder holder, int position) {
-        Results result = data.get(position);
+        ModelResults result = data.get(position);
         holder.txtDate.setText(result.getDate());
         holder.txtAway.setText(result.getAway());
         holder.txtScore.setText(result.getScore());

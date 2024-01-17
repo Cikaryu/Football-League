@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.uts.uasmobprogug214.models.ResultResults;
-import com.uts.uasmobprogug214.models.Results;
+import com.uts.uasmobprogug214.models.ModelResults;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +35,7 @@ public class ResultFragment extends Fragment {
     RecyclerView recyclerView1;
     ApiInterface apiService;
     ResultResults result;
-    List<Results> data1;
+    List<ModelResults> data1;
     RecyclerViewResult adapter;
     Spinner spinTeam;
 
@@ -94,7 +93,7 @@ public class ResultFragment extends Fragment {
         // Isi Spinner Teams
         ArrayAdapter<CharSequence> teamsAdapter = ArrayAdapter.createFromResource(
                 ctx,
-                R.array.teams,
+                R.array.leaguesList,
                 android.R.layout.simple_spinner_item);
         teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinTeam.setAdapter(teamsAdapter);
@@ -120,9 +119,9 @@ public class ResultFragment extends Fragment {
 
 
     public void loadData(){
-        String selectedTeam = spinTeam.getSelectedItem().toString();
+        String selectedLeague = spinTeam.getSelectedItem().toString();
 
-        Call<ResultResults> getResultByTeam = apiService.getResults(selectedTeam);
+        Call<ResultResults> getResultByTeam = apiService.getResults("super-lig");
 
         getResultByTeam.enqueue(new Callback<ResultResults>() {
             @Override
@@ -144,6 +143,7 @@ public class ResultFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResultResults> call, Throwable t) {
+                Log.e("API_CALL", "Error: " + t.getMessage());
                 Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

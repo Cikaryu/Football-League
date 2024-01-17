@@ -1,13 +1,12 @@
 package com.uts.uasmobprogug214.models;
 
 import javax.annotation.Generated;
-import jakarta.validation.Valid;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
 @Generated("jsonschema2pojo")
-public class Results {
+public class ModelResults {
     @SerializedName("score")
     @Expose
     private String score;

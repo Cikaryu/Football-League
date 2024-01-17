@@ -14,8 +14,7 @@ public class ResultResults {
     private Boolean success;
     @SerializedName("result")
     @Expose
-    @Valid
-    private List<Results> result;
+    private List<ModelResults> result;
 
     public Boolean getSuccess() {
         return success;
@@ -25,11 +24,11 @@ public class ResultResults {
         this.success = success;
     }
 
-    public List<Results> getResult() {
+    public List<ModelResults> getResult() {
         return result;
     }
 
-    public void setResult(List<Results> result) {
+    public void setResult(List<ModelResults> result) {
         this.result = result;
     }
 }
