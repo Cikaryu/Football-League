@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.uts.uasmobprogug214.models.GoalKings;
 import com.uts.uasmobprogug214.models.ResultGoalKings;
-import com.uts.uasmobprogug214.models.Results;
+
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class GoalsKingFragment extends Fragment {
     private List<GoalKings> data1;
     private ResultGoalKings result;
     private RecyclerViewGoalKings adapter;
-    private Spinner spinnertipe;
+    private Spinner spinnerLeague;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,15 +42,15 @@ public class GoalsKingFragment extends Fragment {
 
         recyclerView1 = rootView.findViewById(R.id.recyclerViewGoalKings);
         btn1 = rootView.findViewById(R.id.buttongoals);
-        spinnertipe = rootView.findViewById(R.id.spinnerSearchBy);
+        spinnerLeague = rootView.findViewById(R.id.spinnerSearchBy);
 
-        ArrayAdapter<CharSequence> TipeAdapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> league = ArrayAdapter.createFromResource(
                 ctx,
-                R.array.Tipe,
+                R.array.leaguesList,
                 android.R.layout.simple_spinner_item
         );
-        TipeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnertipe.setAdapter(TipeAdapter);
+        league.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLeague.setAdapter(league);
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView1.setLayoutManager(manager);
@@ -74,9 +74,8 @@ public class GoalsKingFragment extends Fragment {
 
         return rootView;
     }
-
     public void LoadData() {
-        String selectedType = spinnertipe.getSelectedItem().toString();
+        String selectedType = spinnerLeague.getSelectedItem().toString();
         Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedType);
         getGoalKings.enqueue(new Callback<ResultGoalKings>() {
             @Override
