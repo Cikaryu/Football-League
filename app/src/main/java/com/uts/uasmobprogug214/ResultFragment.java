@@ -15,9 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.uts.uasmobprogug214.models.ModelLeaguesList;
+import com.uts.uasmobprogug214.models.ResultLeagueLists;
 import com.uts.uasmobprogug214.models.ResultResults;
 import com.uts.uasmobprogug214.models.ModelResults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,9 +38,14 @@ public class ResultFragment extends Fragment {
     RecyclerView recyclerView1;
     ApiInterface apiService;
     ResultResults result;
+
+    ResultLeagueLists leagueListsBody;
+
     List<ModelResults> data1;
+
+    List<ModelLeaguesList> dataLeagueLists;
     RecyclerViewResult adapter;
-    Spinner spinTeam;
+    Spinner spinLeagues;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,22 +92,23 @@ public class ResultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+        apiService = ApiClient.getClient().create(ApiInterface.class);
 
         // Inisialisasi elemen UI
         btn1 = view.findViewById(R.id.btnSubmit);
         recyclerView1 = view.findViewById(R.id.recyclerView1);
-        spinTeam = view.findViewById(R.id.spinTeam);
+        spinLeagues = view.findViewById(R.id.spinLeagues);
 
         // Isi Spinner Teams
-        ArrayAdapter<CharSequence> teamsAdapter = ArrayAdapter.createFromResource(
-                ctx,
-                R.array.leaguesList,
-                android.R.layout.simple_spinner_item);
-        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinTeam.setAdapter(teamsAdapter);
+        loadDataLeagueList();
 
-        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinTeam.setAdapter(teamsAdapter);
+
+    //                ArrayAdapter.createFromResource(
+    //                ctx,
+    //                R.array.leaguesListValue,
+    //                android.R.layout.simple_spinner_item);
+    //        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    //        spinLeagues.setAdapter(teamsAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView1.setLayoutManager(manager);
@@ -110,33 +119,107 @@ public class ResultFragment extends Fragment {
             data1.clear();
         }
 
-        apiService = ApiClient.getClient().create(ApiInterface.class);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
 
         // panggil function load data
         loadData();
         return view;
     }
 
+    public void loadDataLeagueList() {
+        Call<ResultLeagueLists> getLeagueList = apiService.getLeagueList();
+        getLeagueList.enqueue(new Callback<ResultLeagueLists>() {
+            @Override
+            public void onResponse(Call<ResultLeagueLists> call, Response<ResultLeagueLists> response) {
+                if (getActivity() == null) {
+                    // Fragment not attached to an activity, do nothing
+                    return;
+                }
+
+                if (response.code() != 200) {
+                    Toast.makeText(ctx, "Error:" + response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (response.body() != null) {
+                        leagueListsBody = response.body();
+                        dataLeagueLists = leagueListsBody.getResult();
+
+                        if (dataLeagueLists != null) {
+                            for (ModelLeaguesList item : dataLeagueLists) {
+                                String key = item.getKey();
+                                if (key != null) {
+                                    Log.d("Key", key);
+                                }
+                            }
+
+                            List<String> displayList = new ArrayList<>();
+                            for (ModelLeaguesList item : dataLeagueLists) {
+                                displayList.add(item.getKey());
+                            }
+
+                            ArrayAdapter<String> leagueListAdapter = new ArrayAdapter<>(
+                                    ctx, android.R.layout.simple_spinner_item, displayList
+                            );
+
+                            leagueListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinLeagues.setAdapter(leagueListAdapter);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultLeagueLists> call, Throwable t) {
+                Log.e("API_CALL", "Error: " + t.getMessage());
+                Toast.makeText(ctx, "Error:" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     public void loadData(){
-        String selectedLeague = spinTeam.getSelectedItem().toString();
+        String selectedLeague = "ingiltere-premier-ligi";
+        if (spinLeagues.getSelectedItem() != null) {
+            selectedLeague = spinLeagues.getSelectedItem().toString();
+        }
 
-        Call<ResultResults> getResultByTeam = apiService.getResults("super-lig");
+        Call<ResultResults> getResultByTeam = apiService.getResults(selectedLeague);
 
         getResultByTeam.enqueue(new Callback<ResultResults>() {
             @Override
             public void onResponse(Call<ResultResults> call, Response<ResultResults> response) {
-                if (response.code() != 200){
+                if (getActivity() == null) {
+                    // Fragment not attached to an activity, do nothing
+                    return;
+                }
+
+                if (response.code() != 200) {
                     Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                 } else {
-                    if (response.body() == null){
-
-                    } else {
+                    if (response.body() != null) {
                         result = response.body();
                         data1 = result.getResult();
-                        Log.d("data Results", data1.toString());
-                        adapter = new RecyclerViewResult(ctx, data1);
-                        recyclerView1.setAdapter(adapter);
+
+                        if (data1 != null && !data1.isEmpty()) {
+                            // Iterate through the data1 list
+                            for (ModelResults item : data1) {
+                                String score = item.getScore();
+                                if (score != null) {
+                                    Log.d("Score", score);
+                                }
+                            }
+
+                            // Update the RecyclerViewResult adapter with the new data on the UI thread
+                            adapter = new RecyclerViewResult(ctx, data1);
+                            recyclerView1.setAdapter(adapter);
+                        } else {
+                            // Handle the case when the data1 list is null or empty
+                            Log.d("ResultFragment", "Data1 list is null or empty");
+                            Toast.makeText(ctx, "No results available", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -147,6 +230,7 @@ public class ResultFragment extends Fragment {
                 Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
 }

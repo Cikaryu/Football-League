@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,6 +61,7 @@ public class RecyclerViewResult extends RecyclerView.Adapter<RecyclerViewResult.
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewResult.ViewHolder holder, int position) {
         ModelResults result = data.get(position);
+        Log.d("RecyclerViewResult", "Binding data: " + result.toString());
         holder.txtDate.setText(result.getDate());
         holder.txtAway.setText(result.getAway());
         holder.txtScore.setText(result.getScore());
@@ -68,5 +70,10 @@ public class RecyclerViewResult extends RecyclerView.Adapter<RecyclerViewResult.
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    public void setData(List<ModelResults> newData) {
+        data = newData;
+        notifyDataSetChanged();
     }
 }

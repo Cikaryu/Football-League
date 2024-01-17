@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Generated("jsonschema2pojo")
 public class ModelResults {
-    @SerializedName("score")
+    @SerializedName("skor")
     @Expose
     private String score;
     @SerializedName("date")
