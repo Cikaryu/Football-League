@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uts.uasmobprogug214.models.ModelLeague;
@@ -41,7 +42,8 @@ public class LeagueFragment extends Fragment {
     ApiInterface apiService;
     ResultLeague resultLeague;
     List<ModelLeague> data1;
-    Spinner spinteam, spinleague;
+    Spinner  spinleague;
+    TextView txtLeague;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,24 +88,18 @@ public class LeagueFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_league, container, false);
+        btn1 = view.findViewById(R.id.btnSave);
         recyclerView = view.findViewById(R.id.recyclerView);
-        spinteam = view.findViewById(R.id.spinTeam);
-        //spinleague = view.findViewById(R.id.spinLeague);
+        spinleague = view.findViewById(R.id.spinLeague);
+        txtLeague = view.findViewById(R.id.txtNamaLeague);
 
         ctx = getActivity();
-        /*ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.leagues,
+        ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.leaguesList,
                 android.R.layout.simple_spinner_item);
         leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinleague.setAdapter(leaguesAdapter);
-        */
-        ArrayAdapter<CharSequence> teamsAdapter = ArrayAdapter.createFromResource(
-                ctx,
-                R.array.teams,
-                android.R.layout.simple_spinner_item);
-        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinteam.setAdapter(teamsAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView.setLayoutManager(manager);
@@ -112,13 +108,20 @@ public class LeagueFragment extends Fragment {
         data1 = new ArrayList<>();
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        btn1.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        }));
         loadData();
         return view;
     }
     public void loadData() {
-        //String selectedLeagues = spinleague.getSelectedItem().toString();
-        String selectedTeam = spinteam.getSelectedItem().toString();
-        Call <ResultLeague> getLeague = apiService.getLeague(selectedTeam);
+        String selectedLeague = spinleague.getSelectedItem().toString();
+        txtLeague.setText(selectedLeague);
+        Call <ResultLeague> getLeague = apiService.getLeague(selectedLeague);
         getLeague.enqueue(new Callback<ResultLeague>() {
             @Override
             public void onResponse(Call<ResultLeague> call, Response<ResultLeague> response) {
@@ -130,6 +133,9 @@ public class LeagueFragment extends Fragment {
                     } else {
                         resultLeague = response.body();
                         data1 = resultLeague.getResult();
+
+                        leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, data1);
+                        recyclerView.setAdapter(leagueAdapter);
                     }
                 }
 
