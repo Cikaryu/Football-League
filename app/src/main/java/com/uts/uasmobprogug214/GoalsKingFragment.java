@@ -40,7 +40,6 @@ public class GoalsKingFragment extends Fragment {
     ResultGoalKings result;
     RecyclerViewGoalKings adapter;
     Spinner spinnerLeague;
-    TextView txtLeague;
     List<ModelLeaguesList> dataLeagueLists;
     ResultLeagueLists leagueListsBody;
 
@@ -84,7 +83,7 @@ public class GoalsKingFragment extends Fragment {
         btn1 = view.findViewById(R.id.buttongoals);
         spinnerLeague = view.findViewById(R.id.spinnerSearchBy);
 
-        loadDataLeagueList();
+//        loadDataLeagueList();
 
 //        ArrayAdapter<CharSequence> league = ArrayAdapter.createFromResource(
 //                ctx,
@@ -94,7 +93,13 @@ public class GoalsKingFragment extends Fragment {
 //        league.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        spinnerLeague.setAdapter(league);
 
+        ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.leagues_display,
+                android.R.layout.simple_spinner_item);
 
+        leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLeague.setAdapter(leaguesAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView1.setLayoutManager(manager);
@@ -167,11 +172,15 @@ public class GoalsKingFragment extends Fragment {
     }
 
     public void LoadData() {
-        String selectedLeague = "ingiltere-premier-ligi";
-        if (spinnerLeague.getSelectedItem() != null) {
-            selectedLeague = spinnerLeague.getSelectedItem().toString();
-        }
-        Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedLeague);
+//        String selectedLeague = "ingiltere-premier-ligi";
+//        if (spinnerLeague.getSelectedItem() != null) {
+//            selectedLeague = spinnerLeague.getSelectedItem().toString();
+//        }
+//
+        int selectedPosition = spinnerLeague.getSelectedItemPosition();
+        String selectedLeagueValue = getResources().getStringArray(R.array.leagues_values)[selectedPosition];
+
+        Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedLeagueValue);
         getGoalKings.enqueue(new Callback<ResultGoalKings>() {
             @Override
             public void onResponse(Call<ResultGoalKings> call, Response<ResultGoalKings> response) {
