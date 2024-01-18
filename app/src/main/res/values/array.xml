@@ -5,11 +5,28 @@
         <item>super-lig</item>
         <item>tff-1-lig</item>
         <item>uefa-konferans-ligi</item>
+        <item>almanya-bundesliga</item>
+        <item>fransa-ligue-1</item>
+        <item>ispanya-la-liga</item>
+        <item>italya-serie-a-ligi</item>
+        <item>ingiltere-sampiyonluk-ligi</item>
+        <item>almanya-bundesliga-2-ligi</item>
+        <item>fransa-ligue-2</item>
+        <item>euroleague</item>
     </string-array>
     <string-array name="leagues_display">
         <item>Premier League</item>
         <item>Süper Lig</item>
         <item>TFF First League</item>
         <item>UEFA Europa Conference League</item>
+        <item>Bundesliga</item>
+        <item>Ligue 1</item>
+        <item>La Liga</item>
+        <item>Serie A</item>
+        <item>EFL Championship</item>
+        <item>2. Bundesliga</item>
+        <item>Ligue 2</item>
+        <item>EuroLeague</item>
+
     </string-array>
 </resources>
