@@ -64,7 +64,12 @@ public class RecyclerViewResult extends RecyclerView.Adapter<RecyclerViewResult.
         Log.d("RecyclerViewResult", "Binding data: " + result.toString());
         holder.txtDate.setText(result.getDate());
         holder.txtAway.setText(result.getAway());
-        holder.txtScore.setText(result.getScore());
+        String score = result.getScore();
+        if (score != null && !score.equals("undefined-undefined")) {
+            holder.txtScore.setText(result.getScore());
+        } else {
+            holder.txtScore.setText("- - -");
+        }
         holder.txtHome.setText(result.getHome());
     }
     @Override
