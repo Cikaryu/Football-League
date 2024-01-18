@@ -16,10 +16,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uts.uasmobprogug214.models.ModelLeague;
+import com.uts.uasmobprogug214.models.ModelLeaguesList;
 import com.uts.uasmobprogug214.models.ResultLeague;
+import com.uts.uasmobprogug214.models.ResultLeagueLists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,10 @@ public class LeagueFragment extends Fragment {
     ApiInterface apiService;
     ResultLeague resultLeague;
     List<ModelLeague> data1;
-    Spinner spinteam, spinleague;
+    Spinner  spinLeagues;
+    TextView txtLeague;
+    ResultLeagueLists leagueListsBody;
+    List<ModelLeaguesList> dataLeagueLists;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,44 +87,105 @@ public class LeagueFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        ctx = getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_league, container, false);
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+        btn1 = view.findViewById(R.id.btnSave);
         recyclerView = view.findViewById(R.id.recyclerView);
-        spinteam = view.findViewById(R.id.spinTeam);
-        //spinleague = view.findViewById(R.id.spinLeague);
+        spinLeagues = view.findViewById(R.id.spinLeague);
+        txtLeague = view.findViewById(R.id.txtNamaLeague);
 
-        ctx = getActivity();
+
+        loadDataLeagueList();
         /*ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.leagues,
-                android.R.layout.simple_spinner_item);
-        leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinleague.setAdapter(leaguesAdapter);
-        */
-        ArrayAdapter<CharSequence> teamsAdapter = ArrayAdapter.createFromResource(
                 ctx,
                 R.array.leaguesList,
                 android.R.layout.simple_spinner_item);
-        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinteam.setAdapter(teamsAdapter);
+        leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinleague.setAdapter(leaguesAdapter);*/
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
 
-        data1 = new ArrayList<>();
+        if (leagueAdapter != null) {
+            leagueAdapter = null;
+            data1.clear();
+        }
 
-        apiService = ApiClient.getClient().create(ApiInterface.class);
+        btn1.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        }));
         loadData();
         return view;
     }
+
+    public void loadDataLeagueList() {
+        Call<ResultLeagueLists> getLeagueList = apiService.getLeagueList();
+        getLeagueList.enqueue(new Callback<ResultLeagueLists>() {
+            @Override
+            public void onResponse(Call<ResultLeagueLists> call, Response<ResultLeagueLists> response) {
+                if (getActivity() == null) {
+                    // Fragment not attached to an activity, do nothing
+                    return;
+                }
+
+                if (response.code() != 200) {
+                    Toast.makeText(ctx, "Error:" + response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (response.body() != null) {
+                        leagueListsBody = response.body();
+                        dataLeagueLists = leagueListsBody.getResult();
+
+                        if (dataLeagueLists != null) {
+                            for (ModelLeaguesList item : dataLeagueLists) {
+                                String key = item.getKey();
+                                if (key != null) {
+                                    Log.d("Key", key);
+                                }
+                            }
+
+                            List<String> displayList = new ArrayList<>();
+                            for (ModelLeaguesList item : dataLeagueLists) {
+                                displayList.add(item.getKey());
+                            }
+
+                            ArrayAdapter<String> leagueListAdapter = new ArrayAdapter<>(
+                                    ctx, android.R.layout.simple_spinner_item, displayList
+                            );
+
+                            leagueListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinLeagues.setAdapter(leagueListAdapter);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultLeagueLists> call, Throwable t) {
+                Log.e("API_CALL", "Error: " + t.getMessage());
+                Toast.makeText(ctx, "Error:" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void loadData() {
-        //String selectedLeagues = spinleague.getSelectedItem().toString();
-        String selectedTeam = spinteam.getSelectedItem().toString();
-        Call <ResultLeague> getLeague = apiService.getLeague(selectedTeam);
+        String selectedLeague = "ingiltere-premier-ligi";
+        txtLeague.setText(selectedLeague);
+        if (spinLeagues.getSelectedItem() != null) {
+            selectedLeague = spinLeagues.getSelectedItem().toString();
+            txtLeague.setText(selectedLeague);
+        }
+//        String selectedLeague = spinLeagues.getSelectedItem().toString();
+//        txtLeague.setText(selectedLeague);
+        Call <ResultLeague> getLeague = apiService.getLeague(selectedLeague);
         getLeague.enqueue(new Callback<ResultLeague>() {
             @Override
             public void onResponse(Call<ResultLeague> call, Response<ResultLeague> response) {
@@ -130,6 +197,8 @@ public class LeagueFragment extends Fragment {
                     } else {
                         resultLeague = response.body();
                         data1 = resultLeague.getResult();
+                        leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, data1);
+                        recyclerView.setAdapter(leagueAdapter);
                     }
                 }
 
