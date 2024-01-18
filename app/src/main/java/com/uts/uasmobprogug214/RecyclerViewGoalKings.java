@@ -37,13 +37,12 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView textView1, textView2, textView3;
+        TextView textView1, textView2;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.textViewPLayer);
-            textView2 = itemView.findViewById(R.id.textViewPlay);
-            textView3 = itemView.findViewById(R.id.textViewGoal);
+            textView2 = itemView.findViewById(R.id.textViewGoal);
             itemView.setOnClickListener(this);
         }
         @Override
@@ -67,8 +66,7 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
         ModelGoalKings goalKings = data.get(position);
         // Set the data to your TextViews here
         holder.textView1.setText(goalKings.getName());
-        holder.textView2.setText(goalKings.getPlay());
-        holder.textView3.setText(goalKings.getGoals());
+        holder.textView2.setText(goalKings.getGoals());
     }
 
     @Override

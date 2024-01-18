@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-    <!-- background_drawable.xml -->
-    <shape xmlns:android="http://schemas.android.com/apk/res/android">
-        <solid android:color="#d3d3d3" /> <!-- Ganti dengan warna yang diinginkan -->
-        <corners android:radius="1dp" /> <!-- Ganti dengan radius sudut yang diinginkan -->
-    </shape>
-
-
+<!-- res/drawable/blue_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#011B51" /> <!-- Warna biru -->
+</shape>

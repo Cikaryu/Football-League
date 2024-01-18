@@ -7,9 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Generated("jsonschema2pojo")
 public class ModelGoalKings {
-    @SerializedName("play")
-    @Expose
-    private String play;
+
     @SerializedName("goals")
     @Expose
     private String goals;
@@ -17,12 +15,6 @@ public class ModelGoalKings {
     @Expose
     private String name;
 
-    public String getPlay() {
-        return play;
-    }
-    public void setPlay(String play) {
-        this.play = play;
-    }
     public String getGoals() {
         return goals;
     }

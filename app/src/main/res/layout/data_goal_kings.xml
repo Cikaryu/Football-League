@@ -7,19 +7,9 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="102dp"
-        android:layout_height="35dp"
+        android:layout_width="115dp"
+        android:layout_height="38dp"
         android:background="#C1A3A3"
-        android:backgroundTint="#D6B9B9"
-        android:src="@drawable/background_tableabuabu"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewGoalKings"
-        app:layout_constraintStart_toEndOf="@+id/imageView3" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="99dp"
-        android:layout_height="35dp"
-        android:background="#CD0000"
         android:backgroundTint="#D6B9B9"
         android:src="@drawable/background_tableabuabu"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewGoalKings"
@@ -27,9 +17,8 @@
 
     <ImageView
         android:id="@+id/imageView00"
-        android:layout_width="193dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="295dp"
+        android:layout_height="38dp"
         android:background="@color/teal_700"
         android:backgroundTint="#D6B9B9"
         android:src="@drawable/background_tableabuabu"
@@ -41,20 +30,10 @@
         android:id="@+id/textViewPLayer"
         android:layout_width="174dp"
         android:layout_height="24dp"
+        android:layout_marginStart="16dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewPlay"
-        android:layout_width="63dp"
-        android:layout_height="20dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
