@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="leaguesList">
+    <string-array name="leagues_values">
+        <item>ingiltere-premier-ligi</item>
         <item>super-lig</item>
         <item>tff-1-lig</item>
-        <item>tff-2-lig</item>
-        <item>ingiltere-premier-ligi</item>
+        <item>uefa-konferans-ligi</item>
+    </string-array>
+    <string-array name="leagues_display">
+        <item>Premier League</item>
+        <item>Süper Lig</item>
+        <item>TFF First League</item>
+        <item>UEFA Europa Conference League</item>
     </string-array>
 </resources>

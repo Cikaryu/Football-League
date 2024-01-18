@@ -11,7 +11,7 @@
         android:layout_width="309dp"
         android:layout_height="35dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/background_table"
+        android:src="@drawable/background_tableabuabu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
