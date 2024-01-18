@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="413dp"
+        android:layout_height="74dp"
         android:background="#011B51"
         android:gravity="center"
         android:text="European Football Leagues"
         android:textAlignment="gravity"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,6 +69,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="252dp"
         android:text="Team"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/txtRank"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="252dp"
         android:text="W"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.587"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +92,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="252dp"
         android:text="#"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="252dp"
         android:text="PLAY"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.827"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="252dp"
         android:text="L"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.642"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="252dp"
         android:text="PTS"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.716"
         app:layout_constraintStart_toStartOf="parent"
