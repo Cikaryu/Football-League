@@ -22,10 +22,8 @@ import com.uts.uasmobprogug214.models.ResultResults;
 import com.uts.uasmobprogug214.models.ModelResults;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,11 +40,8 @@ public class ResultFragment extends Fragment {
     RecyclerView recyclerView1;
     ApiInterface apiService;
     ResultResults result;
-
     ResultLeagueLists leagueListsBody;
-
     List<ModelResults> data1;
-
     List<ModelLeaguesList> dataLeagueLists;
     RecyclerViewResult adapter;
     Spinner spinLeagues;
@@ -131,6 +126,8 @@ public class ResultFragment extends Fragment {
         loadData();
         return view;
     }
+
+
 
     public void loadDataLeagueList() {
         Call<ResultLeagueLists> getLeagueList = apiService.getLeagueList();

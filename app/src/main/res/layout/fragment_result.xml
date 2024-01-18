@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="413dp"
+        android:layout_height="74dp"
         android:background="#011B51"
         android:gravity="center"
         android:text="European Leagues Results"
         android:textAlignment="gravity"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
