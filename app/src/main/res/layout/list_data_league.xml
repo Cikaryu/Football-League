@@ -23,7 +23,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:text="L"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/txtWin"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +36,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:text="PTS"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/txtLose"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +49,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:text="PLAY"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/txtPoints"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +62,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:text="#"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,7 +75,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:text="Team"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/txtRank"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,7 +88,9 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="12dp"
         android:text="W"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/txtTeam"
         app:layout_constraintTop_toTopOf="parent" />
 
