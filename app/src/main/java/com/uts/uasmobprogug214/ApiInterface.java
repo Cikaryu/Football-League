@@ -36,6 +36,6 @@ public interface    ApiInterface {
     @Headers({"Content-Type: application/json",
             "Authorization: " + API_KEY
     })
-    @GET("sport/goalkings")
+    @GET("sport/goalKings")
     Call<ResultGoalKings> getGoalKings(@Query("data.league") String dataGoalKings);
 }

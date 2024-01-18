@@ -16,7 +16,7 @@ public class ResultGoalKings {
     @SerializedName("result")
     @Expose
     @Valid
-    private List<GoalKings> result;
+    private List<ModelGoalKings> result;
 
     public Boolean getSuccess() {
         return success;
@@ -26,11 +26,11 @@ public class ResultGoalKings {
         this.success = success;
     }
 
-    public List<GoalKings> getResult() {
+    public List<ModelGoalKings> getResult() {
         return result;
     }
 
-    public void setResult(List<GoalKings> result) {
+    public void setResult(List<ModelGoalKings> result) {
         this.result = result;
     }
 

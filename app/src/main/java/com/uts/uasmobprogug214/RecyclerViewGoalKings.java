@@ -9,39 +9,64 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.uts.uasmobprogug214.models.GoalKings;
+
+import com.uts.uasmobprogug214.models.ModelGoalKings;
 
 import java.util.List;
 
 public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoalKings.ViewHolder> {
 
     Context ctx;
-    private static Clicklistener clickListener;
-    List<GoalKings> data;
 
-    public RecyclerViewGoalKings(Context context, List<GoalKings> dataGoalKings) {
+    private static ClickListener clickListener;
+    List<ModelGoalKings> data;
+
+    public RecyclerViewGoalKings(Context context, List<ModelGoalKings> dataGoalKings) {
         ctx = context;
         data = dataGoalKings;
     }
 
-    public void setOnItemClickListener(Clicklistener clickListener) {
+
+
+    public void setOnItemClickListener(ClickListener clickListener) {
         RecyclerViewGoalKings.clickListener = clickListener;
     }
 
+    public interface ClickListener {
+        void onItemClick(int position, View view);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView textView1, textView2;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView1 = itemView.findViewById(R.id.textViewPLayer);
+            textView2 = itemView.findViewById(R.id.textViewGoal);
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition(), view);
+        }
+    }
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.data_goal_kings, parent, false);
+    public RecyclerViewGoalKings.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(
+                parent.getContext()
+        );
+        View view = inflater.inflate(R.layout.data_goal_kings, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        GoalKings goalKings = data.get(position);
 
+        ModelGoalKings goalKings = data.get(position);
         // Set the data to your TextViews here
-        holder.textViewColumn1.setText(goalKings.getName());
-        holder.textViewColumn2.setText(goalKings.getPlay());
-        holder.textViewColumn3.setText(goalKings.getGoals());
+        holder.textView1.setText(goalKings.getName());
+        holder.textView2.setText(goalKings.getGoals());
     }
 
     @Override
@@ -49,31 +74,6 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
         return data.size();
     }
 
-    public void setGoalKingsList(List<GoalKings> goalKingsList) {
-        this.data = goalKingsList;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView textViewColumn1, textViewColumn2, textViewColumn3;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textViewColumn1 = itemView.findViewById(R.id.textViewColumnName);
-            textViewColumn2 = itemView.findViewById(R.id.textViewColumnPlay);
-            textViewColumn3 = itemView.findViewById(R.id.textViewColumnGoals);
-
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (clickListener != null) {
-                clickListener.onItemClick(getAdapterPosition(), view);
-            }
-        }
-    }
-
-    public interface Clicklistener {
-        void onItemClick(int position, View v);
-    }
-}

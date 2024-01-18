@@ -1,17 +1,13 @@
 package com.uts.uasmobprogug214.models;
 
 import javax.annotation.Generated;
-import jakarta.validation.Valid;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 @Generated("jsonschema2pojo")
-public class GoalKings {
-    @SerializedName("play")
-    @Expose
-    private String play;
+public class ModelGoalKings {
+
     @SerializedName("goals")
     @Expose
     private String goals;
@@ -19,12 +15,6 @@ public class GoalKings {
     @Expose
     private String name;
 
-    public String getPlay() {
-        return play;
-    }
-    public void setPlay(String play) {
-        this.play = play;
-    }
     public String getGoals() {
         return goals;
     }
