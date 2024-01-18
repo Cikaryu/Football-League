@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -21,7 +22,10 @@ import com.uts.uasmobprogug214.models.ResultResults;
 import com.uts.uasmobprogug214.models.ModelResults;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -99,16 +103,13 @@ public class ResultFragment extends Fragment {
         recyclerView1 = view.findViewById(R.id.recyclerView1);
         spinLeagues = view.findViewById(R.id.spinLeagues);
 
-        // Isi Spinner Teams
-        loadDataLeagueList();
+        ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.leagues_display,
+                android.R.layout.simple_spinner_item);
 
-
-    //                ArrayAdapter.createFromResource(
-    //                ctx,
-    //                R.array.leaguesListValue,
-    //                android.R.layout.simple_spinner_item);
-    //        teamsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    //        spinLeagues.setAdapter(teamsAdapter);
+        leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinLeagues.setAdapter(leaguesAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView1.setLayoutManager(manager);
@@ -181,12 +182,12 @@ public class ResultFragment extends Fragment {
     }
 
     public void loadData(){
-        String selectedLeague = "ingiltere-premier-ligi";
-        if (spinLeagues.getSelectedItem() != null) {
-            selectedLeague = spinLeagues.getSelectedItem().toString();
-        }
+        int selectedPosition = spinLeagues.getSelectedItemPosition();
 
-        Call<ResultResults> getResultByTeam = apiService.getResults(selectedLeague);
+        // Mendapatkan nilai dari array leagues_values berdasarkan posisi yang dipilih
+        String selectedLeagueValue = getResources().getStringArray(R.array.leagues_values)[selectedPosition];
+
+        Call<ResultResults> getResultByTeam = apiService.getResults(selectedLeagueValue);
 
         getResultByTeam.enqueue(new Callback<ResultResults>() {
             @Override
