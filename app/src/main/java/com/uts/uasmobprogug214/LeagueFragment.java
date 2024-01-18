@@ -100,13 +100,21 @@ public class LeagueFragment extends Fragment {
         txtLeague = view.findViewById(R.id.txtNamaLeague);
 
 
-        loadDataLeagueList();
+        //loadDataLeagueList();
         /*ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
                 ctx,
                 R.array.leaguesList,
                 android.R.layout.simple_spinner_item);
         leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinleague.setAdapter(leaguesAdapter);*/
+
+        ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
+                ctx,
+                R.array.leagues_display,
+                android.R.layout.simple_spinner_item);
+
+        leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinLeagues.setAdapter(leaguesAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView.setLayoutManager(manager);
@@ -177,15 +185,21 @@ public class LeagueFragment extends Fragment {
     }
 
     public void loadData() {
-        String selectedLeague = "ingiltere-premier-ligi";
-        txtLeague.setText(selectedLeague);
-        if (spinLeagues.getSelectedItem() != null) {
-            selectedLeague = spinLeagues.getSelectedItem().toString();
-            txtLeague.setText(selectedLeague);
-        }
+        //String selectedLeague = "ingiltere-premier-ligi";
+        //        if (spinLeagues.getSelectedItem() != null) {
+//            selectedLeague = spinLeagues.getSelectedItem().toString();
+//            txtLeague.setText(selectedLeague);
+//        }
 //        String selectedLeague = spinLeagues.getSelectedItem().toString();
 //        txtLeague.setText(selectedLeague);
-        Call <ResultLeague> getLeague = apiService.getLeague(selectedLeague);
+        int selectedPosition = spinLeagues.getSelectedItemPosition();
+        String selectedLeague = spinLeagues.getSelectedItem().toString();
+
+        // Mendapatkan nilai dari array leagues_values berdasarkan posisi yang dipilih
+        String selectedLeagueValue = getResources().getStringArray(R.array.leagues_values)[selectedPosition];
+        txtLeague.setText(selectedLeague);
+
+        Call <ResultLeague> getLeague = apiService.getLeague(selectedLeagueValue);
         getLeague.enqueue(new Callback<ResultLeague>() {
             @Override
             public void onResponse(Call<ResultLeague> call, Response<ResultLeague> response) {
