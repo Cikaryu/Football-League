@@ -23,7 +23,7 @@
     <TextView
         android:id="@+id/txtAway"
         android:layout_width="140dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="end|center"
         android:text="TextView"
@@ -52,7 +52,7 @@
     <TextView
         android:id="@+id/txtHome"
         android:layout_width="140dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="start|center"
         android:text="TextView"
