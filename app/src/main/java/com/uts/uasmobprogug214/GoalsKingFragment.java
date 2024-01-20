@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.appcompat.app.AlertDialog;
 import com.uts.uasmobprogug214.models.ModelGoalKings;
 import com.uts.uasmobprogug214.models.ModelLeaguesList;
 import com.uts.uasmobprogug214.models.ResultGoalKings;
@@ -187,8 +187,8 @@ public class GoalsKingFragment extends Fragment {
                 if (response.code() != 200) {
                     Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                 } else {
-                    if (response.body() == null){
-
+                    if (response.body() == null || response.body().getResult() == null || response.body().getResult().isEmpty()){
+                        showEmptyDataMessage();
                     } else {
                         result = response.body();
                         data1 = result.getResult();
@@ -205,6 +205,13 @@ public class GoalsKingFragment extends Fragment {
                 Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void showEmptyDataMessage() {
+        new AlertDialog.Builder(ctx)
+                .setTitle("No Data Available")
+                .setMessage("There is no data available for the selected league.")
+                .setPositiveButton("OK", null)
+                .show();
     }
 
 }

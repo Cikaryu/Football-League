@@ -86,9 +86,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="313dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="411dp"
+        android:layout_height="49dp"
         android:background="#011B51"
         android:gravity="center"
         android:text="Goal King of European FootBall"
