@@ -218,7 +218,6 @@ public class GoalsKingFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-        // You can customize the message to fit your application's needs
         Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
     }
     private void showRecyclerView(boolean show) {
