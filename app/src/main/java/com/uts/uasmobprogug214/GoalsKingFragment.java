@@ -20,8 +20,6 @@ import com.uts.uasmobprogug214.models.ModelLeaguesList;
 import com.uts.uasmobprogug214.models.ResultGoalKings;
 import com.uts.uasmobprogug214.models.ResultLeagueLists;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +80,7 @@ public class GoalsKingFragment extends Fragment {
         btn1 = view.findViewById(R.id.buttongoals);
         spinnerLeague = view.findViewById(R.id.spinnerSearchBy);
 
-//        loadDataLeagueList();
+//      loadDataLeagueList();
 
         ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
                 ctx,
@@ -111,6 +109,7 @@ public class GoalsKingFragment extends Fragment {
         });
         LoadData();
         return view;
+
     }
 
 //    public void loadDataLeagueList() {
@@ -184,26 +183,20 @@ public class GoalsKingFragment extends Fragment {
                             data1 = result.getResult();
                             adapter = new RecyclerViewGoalKings(ctx, data1);
                             recyclerView1.setAdapter(adapter);
-                            // Show the RecyclerView when 'success' is true
                             showRecyclerView(true);
                         } else {
-                            // Hide the RecyclerView when 'success' is false
                             showRecyclerView(false);
-                            // Show a message when 'success' is false
                             showMessage("no data !");
                         }
 
                     } else {
-                        // Hide the RecyclerView when the response body is null
                         showRecyclerView(false);
-                        // Handle the case when the response body is null
                         showMessage("no data !");
                     }
 
                 } else {
                     // Handle the case when the response code is not 200 (OK)
                     Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
-                    // Hide the RecyclerView when there is an error
                     showRecyclerView(false);
                 }
             }

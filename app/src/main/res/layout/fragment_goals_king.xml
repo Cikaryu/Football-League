@@ -8,53 +8,55 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewGoalKings"
-        android:layout_width="353dp"
-        android:layout_height="441dp"
+        android:layout_width="354dp"
+        android:layout_height="385dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView00"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.058" />
 
     <ImageView
         android:id="@+id/imageView00"
         android:layout_width="354dp"
         android:layout_height="39dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="162dp"
+        android:layout_marginTop="136dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/background_table"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textViewgoal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="275dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="264dp"
+        android:layout_marginTop="10dp"
         android:text="Goal"
+        android:textAlignment="center"
         android:textColor="#EDEAEA"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView00"
         app:layout_constraintEnd_toEndOf="@+id/imageView00"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="@+id/imageView00"
-        app:layout_constraintTop_toTopOf="@+id/imageView00"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintTop_toTopOf="@+id/imageView00" />
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_width="174dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="11dp"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Player"
+        android:textAlignment="textStart"
         android:textColor="#EDEAEA"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -62,34 +64,16 @@
         app:layout_constraintTop_toTopOf="@+id/imageView00" />
 
     <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="4dp"
-        android:text="Search By League"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerSearchBy"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinnerSearchBy"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/textView"
-        android:layout_width="411dp"
-        android:layout_height="49dp"
+        android:layout_width="413dp"
+        android:layout_height="74dp"
         android:background="#011B51"
         android:gravity="center"
         android:text="Goal King of European FootBall"
         android:textAlignment="gravity"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -99,12 +83,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="136dp"
         android:layout_marginEnd="25dp"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toEndOf="@+id/spinnerSearchBy"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerSearchBy"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="136dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="8dp"
+        android:text="Search By League"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerSearchBy"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
