@@ -203,17 +203,36 @@ public class LeagueFragment extends Fragment {
         getLeague.enqueue(new Callback<ResultLeague>() {
             @Override
             public void onResponse(Call<ResultLeague> call, Response<ResultLeague> response) {
-                if (response.code() != 200) {
-                    Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
-                } else {
-                    if (response.body() == null) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        resultLeague = response.body();
+
+                        // Check the 'success' field in the response
+                        if (resultLeague.getSuccess()) {
+                            data1 = resultLeague.getResult();
+                            leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, data1);
+                            recyclerView.setAdapter(leagueAdapter);
+                            // Show the RecyclerView when 'success' is true
+                            showRecyclerView(true);
+                        } else {
+                            // Hide the RecyclerView when 'success' is false
+                            showRecyclerView(false);
+                            // Show a message when 'success' is false
+                            showMessage("no data !");
+                        }
 
                     } else {
-                        resultLeague = response.body();
-                        data1 = resultLeague.getResult();
-                        leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, data1);
-                        recyclerView.setAdapter(leagueAdapter);
+                        // Hide the RecyclerView when the response body is null
+                        showRecyclerView(false);
+                        // Handle the case when the response body is null
+                        showMessage("no data !");
                     }
+
+                } else {
+                    // Handle the case when the response code is not 200 (OK)
+                    Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                    // Hide the RecyclerView when there is an error
+                    showRecyclerView(false);
                 }
 
             }
@@ -224,5 +243,15 @@ public class LeagueFragment extends Fragment {
                 Toast.makeText(ctx, "Error: " + t.getMessage(), LENGTH_LONG).show();
             }
         });
+    }
+    private void showMessage(String message) {
+        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
+    }
+    private void showRecyclerView(boolean show) {
+        if (show) {
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+        }
     }
 }
