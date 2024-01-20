@@ -210,14 +210,19 @@ public class ResultFragment extends Fragment {
                                 }
                             }
 
-                            // Update the RecyclerViewResult adapter with the new data on the UI thread
+                            // Update the RecyclerViewResult adapter with the new data
                             adapter = new RecyclerViewResult(ctx, data1);
                             recyclerView1.setAdapter(adapter);
                         } else {
                             // Handle the case when the data1 list is null or empty
+                            showRecyclerView(false);
                             Log.d("ResultFragment", "Data1 list is null or empty");
                             Toast.makeText(ctx, "No results available", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                    else {
+                        showRecyclerView(false);
+                        Log.d("ResultFragment", "Data1 list is null or empty");
                     }
                 }
             }
@@ -228,7 +233,14 @@ public class ResultFragment extends Fragment {
                 Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
 
+    private void showRecyclerView(boolean show) {
+        if (show) {
+            recyclerView1.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView1.setVisibility(View.GONE);
+        }
     }
 
 }
