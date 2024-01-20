@@ -12,7 +12,7 @@
         android:layout_marginTop="16dp"
         android:background="#011B51"
         android:gravity="center"
-        android:text="Match Date & Time"
+        android:text="Match Date And Time"
         android:textAlignment="gravity"
         android:textColor="#FFFFFF"
         android:textSize="20sp"

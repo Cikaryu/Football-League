@@ -23,9 +23,11 @@
 
     <TextView
         android:id="@+id/txtNamaLeague"
-        android:layout_width="309dp"
+        android:layout_width="360dp"
         android:layout_height="51dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="192dp"
+        android:layout_marginEnd="20dp"
         android:background="#011B51"
         android:gravity="center"
         android:text="TextView"
@@ -39,7 +41,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="315dp"
+        android:layout_width="360dp"
         android:layout_height="370dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
@@ -53,9 +55,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="309dp"
+        android:layout_width="360dp"
         android:layout_height="35dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
         android:src="@drawable/background_table1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
@@ -81,7 +85,7 @@
         android:text="W"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.587"
+        app:layout_constraintHorizontal_bias="0.631"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,7 +108,7 @@
         android:text="PLAY"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintHorizontal_bias="0.883"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,7 +120,7 @@
         android:text="L"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -128,7 +132,7 @@
         android:text="PTS"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintHorizontal_bias="0.763"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
