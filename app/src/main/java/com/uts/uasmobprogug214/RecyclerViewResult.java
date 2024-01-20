@@ -54,7 +54,7 @@ public class RecyclerViewResult extends RecyclerView.Adapter<RecyclerViewResult.
     public RecyclerViewResult.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
-        View v = inflater.inflate(R.layout.result_detail_data, parent, false);
+        View v = inflater.inflate(R.layout.list_data_result, parent, false);
         return new ViewHolder(v);
     }
 
