@@ -56,7 +56,7 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext()
         );
-        View view = inflater.inflate(R.layout.data_goal_kings, parent, false);
+        View view = inflater.inflate(R.layout.list_data_goal_kings, parent, false);
         return new ViewHolder(view);
     }
 
