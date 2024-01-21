@@ -41,7 +41,7 @@ public class ResultFragment extends Fragment {
     ApiInterface apiService;
     ResultResults result;
     ResultLeagueLists leagueListsBody;
-    List<ModelResults> data1;
+    List<ModelResults> dataResult;
     List<ModelLeaguesList> dataLeagueLists;
     RecyclerViewResult adapter;
     Spinner spinLeagues;
@@ -112,7 +112,7 @@ public class ResultFragment extends Fragment {
 
         if (adapter != null) {
             adapter = null;
-            data1.clear();
+            dataResult.clear();
         }
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -199,11 +199,11 @@ public class ResultFragment extends Fragment {
                 } else {
                     if (response.body() != null) {
                         result = response.body();
-                        data1 = result.getResult();
+                        dataResult = result.getResult();
 
-                        if (data1 != null && !data1.isEmpty()) {
+                        if (dataResult != null && !dataResult.isEmpty()) {
                             // Iterate through the data1 list
-                            for (ModelResults item : data1) {
+                            for (ModelResults item : dataResult) {
                                 String score = item.getScore();
                                 if (score != null) {
                                     Log.d("Score", score);
@@ -211,7 +211,7 @@ public class ResultFragment extends Fragment {
                             }
 
                             // Update the RecyclerViewResult adapter with the new data
-                            adapter = new RecyclerViewResult(ctx, data1);
+                            adapter = new RecyclerViewResult(ctx, dataResult);
                             recyclerView1.setAdapter(adapter);
                         } else {
                             // Handle the case when the data1 list is null or empty
