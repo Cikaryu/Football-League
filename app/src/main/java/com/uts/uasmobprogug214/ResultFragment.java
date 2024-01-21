@@ -41,7 +41,7 @@ public class ResultFragment extends Fragment {
     ApiInterface apiService;
     ResultResults result;
     ResultLeagueLists leagueListsBody;
-    List<ModelResults> data1;
+    List<ModelResults> dataResult;
     List<ModelLeaguesList> dataLeagueLists;
     RecyclerViewResult adapter;
     Spinner spinLeagues;
@@ -112,7 +112,7 @@ public class ResultFragment extends Fragment {
 
         if (adapter != null) {
             adapter = null;
-            data1.clear();
+            dataResult.clear();
         }
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -199,25 +199,30 @@ public class ResultFragment extends Fragment {
                 } else {
                     if (response.body() != null) {
                         result = response.body();
-                        data1 = result.getResult();
+                        dataResult = result.getResult();
 
-                        if (data1 != null && !data1.isEmpty()) {
+                        if (dataResult != null && !dataResult.isEmpty()) {
                             // Iterate through the data1 list
-                            for (ModelResults item : data1) {
+                            for (ModelResults item : dataResult) {
                                 String score = item.getScore();
                                 if (score != null) {
                                     Log.d("Score", score);
                                 }
                             }
 
-                            // Update the RecyclerViewResult adapter with the new data on the UI thread
-                            adapter = new RecyclerViewResult(ctx, data1);
+                            // Update the RecyclerViewResult adapter with the new data
+                            adapter = new RecyclerViewResult(ctx, dataResult);
                             recyclerView1.setAdapter(adapter);
                         } else {
                             // Handle the case when the data1 list is null or empty
+                            showRecyclerView(false);
                             Log.d("ResultFragment", "Data1 list is null or empty");
                             Toast.makeText(ctx, "No results available", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                    else {
+                        showRecyclerView(false);
+                        Log.d("ResultFragment", "Data1 list is null or empty");
                     }
                 }
             }
@@ -228,7 +233,14 @@ public class ResultFragment extends Fragment {
                 Toast.makeText(ctx, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
 
+    private void showRecyclerView(boolean show) {
+        if (show) {
+            recyclerView1.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView1.setVisibility(View.GONE);
+        }
     }
 
 }
