@@ -27,11 +27,6 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
     }
 
 
-
-    public void setOnItemClickListener(ClickListener clickListener) {
-        RecyclerViewGoalKings.clickListener = clickListener;
-    }
-
     public interface ClickListener {
         void onItemClick(int position, View view);
     }
@@ -61,10 +56,9 @@ public class RecyclerViewGoalKings extends RecyclerView.Adapter<RecyclerViewGoal
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
         ModelGoalKings goalKings = data.get(position);
-        // Set the data to your TextViews here
         holder.textView1.setText(goalKings.getName());
         holder.textView2.setText(goalKings.getGoals());
     }

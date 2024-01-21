@@ -33,9 +33,9 @@ public class GoalsKingFragment extends Fragment {
     Button btn1;
     RecyclerView recyclerView1;
     ApiInterface apiService;
-    List<ModelGoalKings> data1;
-    ResultGoalKings result;
-    RecyclerViewGoalKings adapter;
+    List<ModelGoalKings> dataGoalkings;
+    ResultGoalKings resultGoal;
+    RecyclerViewGoalKings adapterGoalKings;
     Spinner spinnerLeague;
     List<ModelLeaguesList> dataLeagueLists;
     ResultLeagueLists leagueListsBody;
@@ -80,7 +80,7 @@ public class GoalsKingFragment extends Fragment {
         btn1 = view.findViewById(R.id.buttongoals);
         spinnerLeague = view.findViewById(R.id.spinnerSearchBy);
 
-//      loadDataLeagueList();
+        //loadDataLeagueList();
 
         ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
                 ctx,
@@ -95,9 +95,9 @@ public class GoalsKingFragment extends Fragment {
         recyclerView1.setHasFixedSize(true);
 
 
-        if (adapter != null) {
-            adapter = null;
-            data1.clear();
+        if (adapterGoalKings != null) {
+            adapterGoalKings = null;
+            dataGoalkings.clear();
         }
 
 
@@ -112,90 +112,89 @@ public class GoalsKingFragment extends Fragment {
 
     }
 
-//    public void loadDataLeagueList() {
-//        Call<ResultLeagueLists> getLeagueList = apiService.getLeagueList();
-//        getLeagueList.enqueue(new Callback<ResultLeagueLists>() {
-//            @Override
-//            public void onResponse(Call<ResultLeagueLists> call, Response<ResultLeagueLists> response) {
-//                if (getActivity() == null) {
-//                    // Fragment not attached to an activity, do nothing
-//                    return;
-//                }
-//
-//                if (response.code() != 200) {
-//                    Toast.makeText(ctx, "Error:" + response.code(), Toast.LENGTH_SHORT).show();
-//                } else {
-//                    if (response.body() != null) {
-//                        leagueListsBody = response.body();
-//                        dataLeagueLists = leagueListsBody.getResult();
-//
-//                        if (dataLeagueLists != null) {
-//                            for (ModelLeaguesList item : dataLeagueLists) {
-//                                String key = item.getKey();
-//                                if (key != null) {
-//                                    Log.d("Key", key);
-//                                }
-//                            }
-//
-//                            List<String> displayList = new ArrayList<>();
-//                            for (ModelLeaguesList item : dataLeagueLists) {
-//                                displayList.add(item.getKey());
-//                            }
-//
-//                            ArrayAdapter<String> leagueListAdapter = new ArrayAdapter<>(
-//                                    ctx, android.R.layout.simple_spinner_item, displayList
-//                            );
-//
-//                            leagueListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                            spinnerLeague.setAdapter(leagueListAdapter);
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultLeagueLists> call, Throwable t) {
-//                Log.e("API_CALL", "Error: " + t.getMessage());
-//                Toast.makeText(ctx, "Error:" + t.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
+    public void loadDataLeagueList() {
+        Call<ResultLeagueLists> getLeagueList = apiService.getLeagueList();
+        getLeagueList.enqueue(new Callback<ResultLeagueLists>() {
+            @Override
+            public void onResponse(Call<ResultLeagueLists> call, Response<ResultLeagueLists> response) {
+                if (getActivity() == null) {
+                    // Fragment not attached to an activity, do nothing
+                    return;
+                }
+
+                if (response.code() != 200) {
+                    Toast.makeText(ctx, "Error:" + response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (response.body() != null) {
+                        leagueListsBody = response.body();
+                        dataLeagueLists = leagueListsBody.getResult();
+
+                        if (dataLeagueLists != null) {
+                            for (ModelLeaguesList item : dataLeagueLists) {
+                                String key = item.getKey();
+                                if (key != null) {
+                                    Log.d("Key", key);
+                                }
+                            }
+
+                            List<String> displayList = new ArrayList<>();
+                            for (ModelLeaguesList item : dataLeagueLists) {
+                                displayList.add(item.getKey());
+                            }
+
+                            ArrayAdapter<String> leagueListAdapter = new ArrayAdapter<>(
+                                    ctx, android.R.layout.simple_spinner_item, displayList
+                            );
+
+                            leagueListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinnerLeague.setAdapter(leagueListAdapter);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultLeagueLists> call, Throwable t) {
+                Log.e("API_CALL", "Error: " + t.getMessage());
+                Toast.makeText(ctx, "Error:" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     public void LoadData() {
-//        String selectedLeague = "ingiltere-premier-ligi";
-//        if (spinnerLeague.getSelectedItem() != null) {
-//            selectedLeague = spinnerLeague.getSelectedItem().toString();
-//        }
-
         int selectedPosition = spinnerLeague.getSelectedItemPosition();
         String selectedLeagueValue = getResources().getStringArray(R.array.leagues_values)[selectedPosition];
-
         Call<ResultGoalKings> getGoalKings = apiService.getGoalKings(selectedLeagueValue);
         getGoalKings.enqueue(new Callback<ResultGoalKings>() {
             @Override
             public void onResponse(Call<ResultGoalKings> call, Response<ResultGoalKings> response) {
+                // handler jika response error atau tidak succes
                 if (response.isSuccessful()) {
+                    //memeriksa jika response tidak null
                     if (response.body() != null) {
-                        result = response.body();
+                        resultGoal = response.body();
 
-                        // Check the 'success' field in the response
-                        if (result.getSuccess()) {
-                            data1 = result.getResult();
-                            adapter = new RecyclerViewGoalKings(ctx, data1);
-                            recyclerView1.setAdapter(adapter);
+                        // Memeriksa Success
+                        if (resultGoal.getSuccess()) {
+                            //jika benar data yang ada di recyclerView Tampil
+                            dataGoalkings = resultGoal.getResult();
+                            adapterGoalKings = new RecyclerViewGoalKings(ctx, dataGoalkings);
+                            recyclerView1.setAdapter(adapterGoalKings);
                             showRecyclerView(true);
                         } else {
+                            // jika tidak maka Reycleview disembunyikan
+                            // dan menampilkan pesan
                             showRecyclerView(false);
                             showMessage("no data !");
                         }
 
                     } else {
+                        //jika response itu null maka Reycleview disembunyikan dan menampilkan pesan
                         showRecyclerView(false);
                         showMessage("no data !");
                     }
 
                 } else {
-                    // Handle the case when the response code is not 200 (OK)
                     Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                     showRecyclerView(false);
                 }
