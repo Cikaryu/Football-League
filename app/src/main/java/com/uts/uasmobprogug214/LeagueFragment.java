@@ -43,7 +43,7 @@ public class LeagueFragment extends Fragment {
     ReyclerViewLeagueCustomAdapter leagueAdapter;
     ApiInterface apiService;
     ResultLeague resultLeague;
-    List<ModelLeague> data1;
+    List<ModelLeague> dataLeague;
     Spinner  spinLeagues;
     TextView txtLeague;
     ResultLeagueLists leagueListsBody;
@@ -122,7 +122,7 @@ public class LeagueFragment extends Fragment {
 
         if (leagueAdapter != null) {
             leagueAdapter = null;
-            data1.clear();
+            dataLeague.clear();
         }
 
         btn1.setOnClickListener((new View.OnClickListener() {
@@ -185,13 +185,6 @@ public class LeagueFragment extends Fragment {
     }
 
     public void loadData() {
-        //String selectedLeague = "ingiltere-premier-ligi";
-        //        if (spinLeagues.getSelectedItem() != null) {
-//            selectedLeague = spinLeagues.getSelectedItem().toString();
-//            txtLeague.setText(selectedLeague);
-//        }
-//        String selectedLeague = spinLeagues.getSelectedItem().toString();
-//        txtLeague.setText(selectedLeague);
         int selectedPosition = spinLeagues.getSelectedItemPosition();
         String selectedLeague = spinLeagues.getSelectedItem().toString();
 
@@ -207,29 +200,28 @@ public class LeagueFragment extends Fragment {
                     if (response.body() != null) {
                         resultLeague = response.body();
 
-                        // Check the 'success' field in the response
+                        // Memeriksa "Success" ketika merespon
                         if (resultLeague.getSuccess()) {
-                            data1 = resultLeague.getResult();
-                            leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, data1);
+                            dataLeague = resultLeague.getResult();
+                            leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, dataLeague);
                             recyclerView.setAdapter(leagueAdapter);
-                            // Show the RecyclerView when 'success' is true
+                            // jika benar" "success" maka akan menampilkan Reycleview
                             showRecyclerView(true);
                         } else {
-                            // Hide the RecyclerView when 'success' is false
+                            // jika tidak maka Reycleview disembunyikan
                             showRecyclerView(false);
-                            // Show a message when 'success' is false
+                            // dan menampilkan pesan jika data tidak "Success"
                             showMessage("no data !");
                         }
 
                     } else {
-                        // Hide the RecyclerView when the response body is null
+                        // sembunyikan Reycleview jika data null
                         showRecyclerView(false);
-                        // Handle the case when the response body is null
+                        // dan menampilkan pesan jika data null
                         showMessage("no data !");
                     }
 
                 } else {
-                    // Handle the case when the response code is not 200 (OK)
                     Toast.makeText(ctx, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                     // Hide the RecyclerView when there is an error
                     showRecyclerView(false);
