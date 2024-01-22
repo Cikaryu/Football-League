@@ -88,16 +88,20 @@ public class ResultFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+
+        // Initialize the Retrofit API service
         apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        // Inisialisasi elemen UI
+        // Initialize UI elements
         btn1 = view.findViewById(R.id.btnSubmit);
         recyclerView1 = view.findViewById(R.id.recyclerView1);
         spinLeagues = view.findViewById(R.id.spinLeagues);
 
+        // Create ArrayAdapter for the Spinner with league data
         ArrayAdapter<CharSequence> leaguesAdapter = ArrayAdapter.createFromResource(
                 ctx,
                 R.array.leagues_display,
@@ -106,15 +110,18 @@ public class ResultFragment extends Fragment {
         leaguesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinLeagues.setAdapter(leaguesAdapter);
 
+
         LinearLayoutManager manager = new LinearLayoutManager(ctx);
         recyclerView1.setLayoutManager(manager);
         recyclerView1.setHasFixedSize(true);
 
+        // Check if adapter is not null and clear dataResult
         if (adapter != null) {
             adapter = null;
             dataResult.clear();
         }
 
+        // Set click listener for the button to load data
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +129,7 @@ public class ResultFragment extends Fragment {
             }
         });
 
-        // panggil function load data
+        // Call function load data
         loadData();
         return view;
     }
@@ -178,12 +185,15 @@ public class ResultFragment extends Fragment {
         });
     }
 
+    // Function to load data for the results based on the selected league
     public void loadData(){
+        // Get the selected position from the Spinner
         int selectedPosition = spinLeagues.getSelectedItemPosition();
 
-        // Mendapatkan nilai dari array leagues_values berdasarkan posisi yang dipilih
+        // Get the league value based on the selected position
         String selectedLeagueValue = getResources().getStringArray(R.array.leagues_values)[selectedPosition];
 
+        // Make an API call to get the results for the selected league
         Call<ResultResults> getResultByTeam = apiService.getResults(selectedLeagueValue);
 
         getResultByTeam.enqueue(new Callback<ResultResults>() {
@@ -214,7 +224,7 @@ public class ResultFragment extends Fragment {
                             adapter = new RecyclerViewResult(ctx, dataResult);
                             recyclerView1.setAdapter(adapter);
                         } else {
-                            // Handle the case when the data1 list is null or empty
+                            // Don't show recycler view if null
                             showRecyclerView(false);
                             Log.d("ResultFragment", "Data1 list is null or empty");
                             Toast.makeText(ctx, "No results available", Toast.LENGTH_SHORT).show();

@@ -40,7 +40,7 @@ public class LeagueFragment extends Fragment {
     Context ctx;
     Button btn1;
     RecyclerView recyclerView;
-    ReyclerViewLeagueCustomAdapter leagueAdapter;
+    RecyclerViewLeague leagueAdapter;
     ApiInterface apiService;
     ResultLeague resultLeague;
     List<ModelLeague> dataLeague;
@@ -203,7 +203,7 @@ public class LeagueFragment extends Fragment {
                         // Memeriksa "Success" ketika merespon
                         if (resultLeague.getSuccess()) {
                             dataLeague = resultLeague.getResult();
-                            leagueAdapter = new ReyclerViewLeagueCustomAdapter(ctx, dataLeague);
+                            leagueAdapter = new RecyclerViewLeague(ctx, dataLeague);
                             recyclerView.setAdapter(leagueAdapter);
                             // jika benar" "success" maka akan menampilkan Reycleview
                             showRecyclerView(true);

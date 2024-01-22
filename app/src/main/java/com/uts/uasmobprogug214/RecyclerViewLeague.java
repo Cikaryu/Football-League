@@ -12,18 +12,18 @@ import com.uts.uasmobprogug214.models.ModelLeague;
 
 import java.util.List;
 
-public class ReyclerViewLeagueCustomAdapter extends RecyclerView.Adapter<ReyclerViewLeagueCustomAdapter.ViewHolder> {
+public class RecyclerViewLeague extends RecyclerView.Adapter<RecyclerViewLeague.ViewHolder> {
     List<ModelLeague> data;
     private static ClickListener clickListener;
     Context ctx;
 
-    public ReyclerViewLeagueCustomAdapter(Context context, List<ModelLeague> dataLeague) {
+    public RecyclerViewLeague(Context context, List<ModelLeague> dataLeague) {
         ctx = context;
         data = dataLeague;
     }
 
     public void setOnItemClickListener(ClickListener clickListener){
-        ReyclerViewLeagueCustomAdapter.clickListener = clickListener;
+        RecyclerViewLeague.clickListener = clickListener;
     }
 
     public interface ClickListener {
@@ -50,7 +50,7 @@ public class ReyclerViewLeagueCustomAdapter extends RecyclerView.Adapter<Reycler
 
     @NonNull
     @Override
-    public ReyclerViewLeagueCustomAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewLeague.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(
                 parent.getContext());
         View v = inflater.inflate(R.layout.list_data_league, parent, false);
