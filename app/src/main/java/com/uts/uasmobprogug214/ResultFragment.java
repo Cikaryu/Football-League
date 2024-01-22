@@ -226,13 +226,13 @@ public class ResultFragment extends Fragment {
                         } else {
                             // Don't show recycler view if null
                             showRecyclerView(false);
-                            Log.d("ResultFragment", "Data1 list is null or empty");
+                            Log.d("ResultFragment", "dataResult list is null or empty");
                             Toast.makeText(ctx, "No results available", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else {
                         showRecyclerView(false);
-                        Log.d("ResultFragment", "Data1 list is null or empty");
+                        Log.d("ResultFragment", "dataResult list is null or empty");
                     }
                 }
             }
